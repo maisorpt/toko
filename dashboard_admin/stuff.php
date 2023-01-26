@@ -32,7 +32,7 @@
                                     <th scope="col">Brand ID</th>
                                     <th scope="col">Brand Name</th>
                                     <th scope="col"> Brand Logo</th>
-                                    <th><button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#new">
+                                    <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
                             New </button> </th>
                                     <!-- w -->
                                 </tr>
@@ -93,7 +93,7 @@
                                                <img  src="assets\<?= $row["brand_image"] ?>"></img>
                                             </td>
                                             <td>
-                                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                            <button class="btn btn-success" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
                                                     Edit</button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
@@ -139,7 +139,6 @@
                 
                 const button = event.relatedTarget
                 const stuff_id = button.getAttribute('data-bs-id')
-                alert(stuff_id);
                 $.post("data/form.php", {stuff_id}, function (a) {
                     // console.log(a);
                     $('.modal-body').html(a);
@@ -154,19 +153,19 @@
             const model = document.getElementById('delete')
             model.addEventListener('show.bs.modal', event => {
                 const button = event.relatedTarget
-                const id = button.getAttribute('data-bs-id')
-                //alert(id);
+                const stuff_id = button.getAttribute('data-bs-id')
                 
                 $('#hapus').on('click', function (event) {
                     
-                    $.post("data/delete.php", {id}, function (a) {
+                    $.post("data/delete.php", {stuff_id}, function (a) {
                        window.location.reload();
                     })
                 })
             })
             const modul = document.getElementById('new')
             modul.addEventListener('show.bs.modal', event => {
-                $.post("data/new.php", function (a) {
+                const id = 2;
+                $.post("data/new.php", {id}, function (a) {
                     $('.modal-create').html(a);
                 })
 

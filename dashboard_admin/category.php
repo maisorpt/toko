@@ -31,6 +31,9 @@
                     <th scope="col"> No</th>
                     <th scope="col">Category ID</th>
                     <th scope="col">Category</th>
+                    <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                            New </button> </th>
+                                </tr>
                     <!-- w -->
                 </tr>
             </thead>
@@ -85,7 +88,7 @@
                                 <?= $row["jenis"] ?>
                             </td>
                             <td>
-                                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                            <button class="btn btn-success" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
                                                     Edit</button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
@@ -113,6 +116,7 @@
             
 
             <?php include_once('layout/footer.php') ?>
+            <?php include_once('layout/modal.php')?>
 
         </div>
         <!-- Content End -->
@@ -121,6 +125,49 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+    <script>
+  $(document).ready(function () {
+            //  alert('ok');
+            const modal = document.getElementById('exampleModal')
+
+            modal.addEventListener('show.bs.modal', event => {
+                
+                const button = event.relatedTarget
+                const category_id = button.getAttribute('data-bs-id')
+                $.post("data/form.php", {category_id}, function (a) {
+                    // console.log(a);
+                    $('.modal-body').html(a);
+                }).done(function () {
+
+                }).fail(function () {
+                    // alert("error");
+                }).always(function () {
+                    // alert("finished");
+                });
+            })
+            const model = document.getElementById('delete')
+            model.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget
+                const category_id = button.getAttribute('data-bs-id')
+                
+                $('#hapus').on('click', function (event) {
+                    
+                    $.post("data/delete.php", {category_id}, function (a) {
+                       window.location.reload();
+                    })
+                })
+            })
+            const modul = document.getElementById('new')
+            modul.addEventListener('show.bs.modal', event => {
+                const id = 3;
+                $.post("data/new.php", {id}, function (a) {
+                    $('.modal-create').html(a);
+                })
+
+            })
+            
+        })
+        </script>
     <?php include_once('layout/resourcejs.php') ?>
 </body>
 

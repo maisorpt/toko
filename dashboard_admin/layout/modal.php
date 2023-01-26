@@ -5,7 +5,7 @@
                         <h1 class="modal-title fs-5" id="new">New Data</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-create">
+                    <div class="modal-create m-3">
 
                     </div>
                 </div>

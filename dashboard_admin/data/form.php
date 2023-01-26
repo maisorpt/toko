@@ -20,11 +20,11 @@ if(isset($_POST['id']))
     <form action="data/update.php?no=<?= $result['id'] ?>" enctype="multipart/form-data" method="POST">
         <div class="mb-3">
             <label for="no" class="form-label">Item Code</label>
-            <input type="text" class="form-control" id="no" placeholder="id" value="<?= $result['id']?>" disabled />
+            <input type="text" class="form-control" id="no" value="<?= $result['id']?>" disabled />
         </div>
         <div class="mb-3">
             <label for="nama" class="form-label">Item Name</label>
-            <input type="text" class="form-control" id="nama" placeholder="namamu" name="nama" value="<?= $result['item_name']?>" />
+            <input type="text" class="form-control" id="nama" placeholder="Item Name" name="nama" value="<?= $result['item_name']?>" />
         </div>
         <div class="mb-3">
         <label for="merek" class="form-label">Item Brand</label>
@@ -82,14 +82,15 @@ if(isset($_POST['id']))
         </div>
         <div class="mb-3">
             <label for="nohp" class="form-label">Quantity</label>
-            <input type="text" class="form-control" id="nohp" placeholder="jumlah" name="jumlah" value="<?= $result['quantity']?>" />
+            <input type="text" class="form-control" id="nohp" placeholder="jumlah Stock" name="jumlah" value="<?= $result['quantity']?>" />
         </div>
         <div class="mb-3">
             <label for="nohp" class="form-label">Unit Price</label>
-            <input type="text" class="form-control" id="nohp" placeholder="harga" name="harga" value="<?= $result['price']?>" />
+            <input type="text" class="form-control" id="nohp" placeholder="Harga" name="harga" value="<?= $result['price']?>" />
         </div>
         <div class=" d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary mb-3 text-center">Update</button>
+            <button type="submit" class="btn btn-success mb-3 text-center mx-4">Update</button>
+            <button type="button" class="btn btn-danger mb-3 text-center" data-bs-dismiss="modal">Cancel</button>
         </div>
     </form>
 
@@ -107,20 +108,71 @@ if(isset($_POST['id']))
     <form action="data/update.php?stuff_id=<?= $result['id'] ?>" enctype="multipart/form-data" method="POST">
     <div class="mb-3">
         <label for="no" class="form-label">Brand ID</label>
-        <input type="text" class="form-control" id="no" placeholder="id" value="<?= $result['id'] ?>" disabled />
+        <input type="text" class="form-control" id="no"  value="<?= $result['id'] ?>" disabled />
     </div>
     <div class="mb-3">
         <label for="nama" class="form-label">Brand Name</label>
-        <input type="text" class="form-control" id="nama" placeholder="namamu" name="brand" value="<?= $result['merek'] ?>" />
+        <input type="text" class="form-control" id="nama" placeholder="Brand Name" name="brand" value="<?= $result['merek'] ?>" />
     </div>
 
     <div class="mb-3">
         <label for="nama" class="form-label">Brand Logo</label>
-        <input type="file" class="form-control" id="nama" placeholder="namamu" name="image" value="<?= $result['brand_image'] ?>" />
+        <input type="file" class="form-control" id="nama"  name="image" value="<?= $result['brand_image'] ?>" />
     </div>
 
     <div class=" d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary mb-3 text-center">Update</button>
+        <button type="submit" class="btn btn-success mb-3 text-center mx-4">Update</button>
+        <button type="button" class="btn btn-danger mb-3 text-center" data-bs-dismiss="modal">Cancel</button>
     </div>
 </form>
+<?php }elseif (isset($_POST['category_id'])) {
+
+$id = $_POST['category_id'];
+$sql = "SELECT * FROM kategori where id = '$id'";
+$result = $conn->query($sql)->fetch_assoc();
+
+
+
+?>
+    <form action="data/update.php?category_id=<?= $result['id'] ?>" enctype="multipart/form-data" method="POST">
+    <div class="mb-3">
+        <label for="no" class="form-label">Category ID</label>
+        <input type="text" class="form-control" id="no"  value="<?= $result['id'] ?>" disabled />
+    </div>
+    <div class="mb-3">
+        <label for="nama" class="form-label">Category</label>
+        <input type="text" class="form-control" id="nama" placeholder="Category" name="category" value="<?= $result['jenis'] ?>" />
+    </div>
+
+    <div class=" d-flex justify-content-center">
+        <button type="submit" class="btn btn-success mb-3 text-center mx-4">Update</button>
+        <button type="button" class="btn btn-danger mb-3 text-center" data-bs-dismiss="modal">Cancel</button>
+    </div>
+</form>
+
+<?php }elseif (isset($_POST['unit_id'])) {
+
+$id = $_POST['unit_id'];
+$sql = "SELECT * FROM satuan where id = '$id'";
+$result = $conn->query($sql)->fetch_assoc();
+
+
+
+?>
+    <form action="data/update.php?unit_measure_id=<?= $result['id'] ?>" enctype="multipart/form-data" method="POST">
+    <div class="mb-3">
+        <label for="no" class="form-label">Unit of Measure ID</label>
+        <input type="text" class="form-control" id="no"  value="<?= $result['id'] ?>" disabled />
+    </div>
+    <div class="mb-3">
+        <label for="nama" class="form-label">Unit of Measure</label>
+        <input type="text" class="form-control" id="nama" placeholder="Unit of Measure" name="unit" value="<?= $result['satuan'] ?>" />
+    </div>
+
+    <div class=" d-flex justify-content-center">
+        <button type="submit" class="btn btn-success mb-3 text-center mx-4">Update</button>
+        <button type="button" class="btn btn-danger mb-3 text-center" data-bs-dismiss="modal">Cancel</button>
+    </div>
+</form>
+
 <?php }?>

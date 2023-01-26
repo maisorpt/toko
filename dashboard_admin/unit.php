@@ -30,6 +30,9 @@
                                 <tr>
                                     <th scope="col"> No</th>
                                     <th scope="col">Unit of Measure</th>
+                                    <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                            New </button> </th>
+                                </tr>
                                     <!-- w -->
                                 </tr>
                             </thead>
@@ -61,20 +64,11 @@
                                 $sql = "SELECT * FROM satuan";
 
                                 $result = $conn->query($sql);
-
+                                $no = 1;
                                 if ($result->num_rows > 0) {
                                     // output data of each row
-                                    while ($row = $result->fetch_assoc()) {
-
-                                        // if ($row["foto"] == "") {
-                                        //     $gambar = "gambar.jpg";
-                                        // } else {
-                                        //     $gambar = $row["foto"];
-                                        // }
-                                        // 
-                                        $no = 1;
+                                    while ($row = $result->fetch_assoc()) {       
                                         ?>
-
                                         <tr>
                                             <th scope="row">
                                                 <?= $no++ ?>
@@ -83,7 +77,7 @@
                                                 <?= $row["satuan"] ?>
                                             </td>
                                             <td>
-                                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                            <button class="btn btn-success" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
                                                     Edit</button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
@@ -92,34 +86,66 @@
                                             </td>
                                         </tr>
                                         <?php
-
                                     }
                                 }
-
                                 ?>
-
                             </tbody>
-
-
                         </table>
                     </div>
-
                 </div>
-
             </div>
 
-
-
             <?php include_once('layout/footer.php') ?>
+            <?php include_once('layout/modal.php')?>
 
         </div>
         <!-- Content End -->
-
-
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
-    
+    <script>
+  $(document).ready(function () {
+            //  alert('ok');
+            const modal = document.getElementById('exampleModal')
+
+            modal.addEventListener('show.bs.modal', event => {
+                
+                const button = event.relatedTarget
+                const unit_id = button.getAttribute('data-bs-id')
+                $.post("data/form.php", {unit_id}, function (a) {
+                    // console.log(a);
+                    $('.modal-body').html(a);
+                }).done(function () {
+
+                }).fail(function () {
+                    // alert("error");
+                }).always(function () {
+                    // alert("finished");
+                });
+            })
+            const model = document.getElementById('delete')
+            model.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget
+                const unit_id = button.getAttribute('data-bs-id')
+                
+                $('#hapus').on('click', function (event) {
+                    
+                    $.post("data/delete.php", {unit_id}, function (a) {
+                       window.location.reload();
+                    })
+                })
+            })
+            const modul = document.getElementById('new')
+            modul.addEventListener('show.bs.modal', event => {
+                const id = 4;
+                $.post("data/new.php", {id}, function (a) {
+                    $('.modal-create').html(a);
+                })
+
+            })
+            
+        })
+        </script>
     <?php include_once('layout/resourcejs.php') ?>
 </body>
 

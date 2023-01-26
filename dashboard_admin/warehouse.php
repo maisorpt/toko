@@ -36,7 +36,7 @@
                                     <th scope="col"> Unit of Measure</th>
                                     <th scope="col"> Unit Price</th>
                                     <th scope="col"> Qty</th>
-                                    <th><button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#new">
+                                    <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
                             New </button> </th>
                                 </tr>
                             </thead>
@@ -114,7 +114,7 @@
                                                 <?= $row["quantity"] ?>
                                             </td>
                                             <td>
-                                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                                <button class="btn btn-success" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
                                                     Edit</button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
@@ -177,7 +177,6 @@
             model.addEventListener('show.bs.modal', event => {
                 const button = event.relatedTarget
                 const id = button.getAttribute('data-bs-id')
-                //alert(id);
                 
                 $('#hapus').on('click', function (event) {
                     
@@ -188,7 +187,8 @@
             })
             const modul = document.getElementById('new')
             modul.addEventListener('show.bs.modal', event => {
-                $.post("data/new.php", function (a) {
+                const id = 1;
+                $.post("data/new.php", {id}, function (a) {
                     $('.modal-create').html(a);
                 })
 
