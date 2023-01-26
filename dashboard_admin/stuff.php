@@ -90,7 +90,7 @@
                                                 <?= $row["merek"] ?>
                                             </td>
                                             <td>
-                                                <?= $row["brand_image"] ?>
+                                               <img  src="assets\<?= $row["brand_image"] ?>"></img>
                                             </td>
                                             <td>
                                             <button class="btn btn-primary" data-bs-toggle="modal"

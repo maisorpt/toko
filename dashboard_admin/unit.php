@@ -82,6 +82,14 @@
                                             <td>
                                                 <?= $row["satuan"] ?>
                                             </td>
+                                            <td>
+                                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                    Edit</button>
+                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                    data-bs-id="<?= $row["id"] ?>">
+                                                    Delete</button>
+                                            </td>
                                         </tr>
                                         <?php
 
@@ -111,6 +119,7 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+    
     <?php include_once('layout/resourcejs.php') ?>
 </body>
 

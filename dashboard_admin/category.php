@@ -84,6 +84,14 @@
                             <td>
                                 <?= $row["jenis"] ?>
                             </td>
+                            <td>
+                                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                    Edit</button>
+                                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                    data-bs-id="<?= $row["id"] ?>">
+                                                    Delete</button>
+                                            </td>
                         </tr>
                         <?php
 

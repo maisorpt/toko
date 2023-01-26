@@ -4,7 +4,7 @@ include '../../koneksi.php';
 include 'getdata.php';
 
 ?>
-<form action="data/update.php?>" enctype="multipart/form-data" method="POST" class="mx-4">
+<form action="data/send.php?>" enctype="multipart/form-data" method="POST" class="mx-4">
     <div class="mb-3">
         <label for="no" class="form-label">Item Code</label>
         <input type="text" class="form-control" id="no" placeholder="id"  disabled />

@@ -111,12 +111,12 @@ if(isset($_POST['id']))
     </div>
     <div class="mb-3">
         <label for="nama" class="form-label">Brand Name</label>
-        <input type="text" class="form-control" id="nama" placeholder="namamu" name="nama" value="<?= $result['merek'] ?>" />
+        <input type="text" class="form-control" id="nama" placeholder="namamu" name="brand" value="<?= $result['merek'] ?>" />
     </div>
 
     <div class="mb-3">
         <label for="nama" class="form-label">Brand Logo</label>
-        <input type="file" class="form-control" id="nama" placeholder="namamu" name="nama" value="<?= $result['brand_image'] ?>" />
+        <input type="file" class="form-control" id="nama" placeholder="namamu" name="image" value="<?= $result['brand_image'] ?>" />
     </div>
 
     <div class=" d-flex justify-content-center">
