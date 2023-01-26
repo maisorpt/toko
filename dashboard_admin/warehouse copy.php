@@ -22,8 +22,8 @@
 
             <?php include_once('layout/navbar.php') ?>
             <div class="row">
-                <div class="col m-4">
-                    <div class="bg-light rounded p-3">
+                <div class="col m-4 shadow-lg p-3 m-3 bg-body-tertiary rounded">
+                    <div class="rounded p-3">
                         <h3 class="mb-4 mt-2">Warehouse Stock</h3>
                         <table class="table table-bordered text-center" style="width:100%">
                             <thead>
@@ -42,35 +42,34 @@
                             </thead>
                             <tbody>
                                 <?php
-                                //                 		$batas = 10;
-//                         $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
-//                         $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
-                                
-                                //                         $previous = $halaman - 1;
-//                         $next = $halaman + 1;
-                                
+                                $batas = 10;
+                                $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                                $previous = $halaman - 1;
+                                $next = $halaman + 1;
+
                                 include "../koneksi.php";
 
+                                $data = $conn->query("SELECT g.*,k.jenis, s.satuan, b.merek
+                                FROM gudang AS g 
+                               LEFT JOIN barang as b ON g.id_barang=b.id
+                               LEFT JOIN kategori as k ON g.id_jenis=k.id
+                               LEFT  JOIN satuan as s ON g.quantity=s.id");
 
-                                //                 $data =  $conn->query("SELECT dk.id, dk.id_kelas, k.nama_kelas, t.*
-//                 FROM daftar_kelas AS dk
-//                 JOIN kelas as k ON dk.id_kelas=k.id_kelas
-//                RIGHT JOIN test1 as t ON dk.id_nama=t.no ORDER BY ID");
-                                
+                                $jumlah_data = $data->num_rows;
+                                $total_halaman = ceil($jumlah_data / $batas);
 
-                                // $previous = $halaman - 1;
-// $next = $halaman + 1;
-                                
-                                //                 $jumlah_data = $data->num_rows;
-//                 $total_halaman = ceil($jumlah_data / $batas);
-                                
 
                                 $sql = "SELECT g.*,k.jenis, s.satuan, b.merek
-                FROM gudang AS g 
-                JOIN barang as b ON g.id_barang=b.id
-                JOIN kategori as k ON g.id_jenis=k.id
-                JOIN satuan as s ON g.quantity=s.id
-                ";
+                             FROM gudang AS g 
+                            LEFT JOIN barang as b ON g.id_barang=b.id
+                            LEFT JOIN kategori as k ON g.id_jenis=k.id
+                            LEFT  JOIN satuan as s ON g.quantity=s.id
+                            LIMIT $halaman_awal, $batas;
+                            ";
+
+
 
                                 $result = $conn->query($sql);
 
@@ -179,6 +178,11 @@
                     // alert("finished");
                 });
             })
+
+            $("#myForm").submit(function(event){
+             event.preventDefault(); // prevent the form from submitting
+    // your code here
+  });
         }</script>
     <?php include_once('layout/resourcejs.php') ?>
 </body>

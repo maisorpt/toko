@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Cek apakah terdapat session
+if (!isset($_SESSION['username'])) {
+    // Redirect ke halaman login
+    header("Location: ../auth/login.php");
+}
+$content = 5;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +33,8 @@
 
             <?php include_once('layout/navbar.php') ?>
             <div class="row">
-                <div class="col m-4">
-                    <div class="bg-light rounded p-3">
+                <div class="col m-4 shadow-lg p-3 m-3 bg-body-tertiary rounded">
+                    <div class="rounded p-3">
                         <h3 class="mb-4 mt-2">Unit of Measure</h3>
                         <table class="table table-bordered text-center" style="width:100%">
                             <thead>
@@ -31,43 +42,35 @@
                                     <th scope="col"> No</th>
                                     <th scope="col">Unit of Measure</th>
                                     <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
-                            New </button> </th>
+                                            New </button> </th>
                                 </tr>
-                                    <!-- w -->
+                                <!-- w -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                //                 		$batas = 10;
-//                         $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
-//                         $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
-                                
-                                //                         $previous = $halaman - 1;
-//                         $next = $halaman + 1;
-                                
+                                $batas = 5;
+                                $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                                $previous = $halaman - 1;
+                                $next = $halaman + 1;
+
                                 include "../koneksi.php";
 
+                                $data = $conn->query("SELECT * FROM satuan;");
 
-                                //                 $data =  $conn->query("SELECT dk.id, dk.id_kelas, k.nama_kelas, t.*
-//                 FROM daftar_kelas AS dk
-//                 JOIN kelas as k ON dk.id_kelas=k.id_kelas
-//                RIGHT JOIN test1 as t ON dk.id_nama=t.no ORDER BY ID");
-                                
+                                $jumlah_data = $data->num_rows;
+                                $total_halaman = ceil($jumlah_data / $batas);
 
-                                // $previous = $halaman - 1;
-// $next = $halaman + 1;
-                                
-                                //                 $jumlah_data = $data->num_rows;
-//                 $total_halaman = ceil($jumlah_data / $batas);
-                                
 
-                                $sql = "SELECT * FROM satuan";
+                                $sql = "SELECT * FROM satuan LIMIT $halaman_awal, $batas;";
 
                                 $result = $conn->query($sql);
-                                $no = 1;
+                               
                                 if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while ($row = $result->fetch_assoc()) {       
+                                    $no = 1;
+                                    while ($row = $result->fetch_assoc()) {
                                         ?>
                                         <tr>
                                             <th scope="row">
@@ -77,7 +80,7 @@
                                                 <?= $row["satuan"] ?>
                                             </td>
                                             <td>
-                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                <button class="btn btn-success" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
                                                     Edit</button>
                                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
@@ -90,13 +93,15 @@
                                 }
                                 ?>
                             </tbody>
-                        </table>
+                         </table>
+                        <?php include_once('layout/pagination.php') ?>
                     </div>
                 </div>
+                <?php include_once('layout/footer.php') ?>
             </div>
 
-            <?php include_once('layout/footer.php') ?>
-            <?php include_once('layout/modal.php')?>
+            
+            <?php include_once('layout/modal.php') ?>
 
         </div>
         <!-- Content End -->
@@ -104,15 +109,15 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
     <script>
-  $(document).ready(function () {
+        $(document).ready(function () {
             //  alert('ok');
             const modal = document.getElementById('exampleModal')
 
             modal.addEventListener('show.bs.modal', event => {
-                
+
                 const button = event.relatedTarget
                 const unit_id = button.getAttribute('data-bs-id')
-                $.post("data/form.php", {unit_id}, function (a) {
+                $.post("data/form.php", { unit_id }, function (a) {
                     // console.log(a);
                     $('.modal-body').html(a);
                 }).done(function () {
@@ -127,25 +132,37 @@
             model.addEventListener('show.bs.modal', event => {
                 const button = event.relatedTarget
                 const unit_id = button.getAttribute('data-bs-id')
-                
+
                 $('#hapus').on('click', function (event) {
-                    
-                    $.post("data/delete.php", {unit_id}, function (a) {
-                       window.location.reload();
+
+                    $.post("data/delete.php", { unit_id }, function (a) {
+                        window.location.reload();
                     })
                 })
             })
             const modul = document.getElementById('new')
             modul.addEventListener('show.bs.modal', event => {
                 const id = 4;
-                $.post("data/new.php", {id}, function (a) {
+                $.post("data/new.php", { id }, function (a) {
                     $('.modal-create').html(a);
                 })
 
             })
-            
+
+            $("form").submit(function (event) {
+                event.preventDefault();
+                // alert("hoi");
+                const id = $("#form").attr("search-id");
+
+                // alert(id);
+                const query = $(this).find("input").val();
+            //    alert(query);
+               window.location.href = "http://localhost/toko/dashboard_admin/search.php?id=" + id + "&query=" + query;
+
+            });
+
         })
-        </script>
+    </script>
     <?php include_once('layout/resourcejs.php') ?>
 </body>
 
