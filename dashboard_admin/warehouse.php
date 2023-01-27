@@ -200,6 +200,7 @@ $content = 2;
                 // alert(id);
                 const query = $(this).find("input").val();
             //    alert(query);
+                
                window.location.href = "http://localhost/toko/dashboard_admin/search.php?id=" + id + "&query=" + query;
 
             });

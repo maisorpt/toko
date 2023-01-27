@@ -6,7 +6,7 @@
     <a href="#" class="sidebar-toggler flex-shrink-0 ">
         <i class="fa fa-bars"></i>
     </a>
-    <form class="d-none d-md-flex ms-4" role="search" action="http://localhost/toko/dashboard_admin/search.php" search-id="<?=$content?>" method="post" id="form"> 
+    <form class="d-none d-md-flex ms-4" role="search" action="http://localhost/toko/dashboard_admin/search.php" search-id="<?=$content?>" method="post" id="form">
     <input class="form-control border-0" type="search" placeholder="Search" name="query">
     <button class="btn btn-outline-light mx-1" type="submit" >Search</button>
     </form>

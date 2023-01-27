@@ -1,0 +1,48 @@
+     Category
+     $data = $conn->query("SELECT * FROM kategori;");
+
+                                $jumlah_data = $data->num_rows;
+                                $total_halaman = ceil($jumlah_data / $batas);
+
+                                $sql = "SELECT * FROM kategori LIMIT $halaman_awal, $batas;";
+
+    Stuff
+
+    $data = $conn->query("SELECT * FROM barang;");
+
+$jumlah_data = $data->num_rows;
+$total_halaman = ceil($jumlah_data / $batas);
+
+$sql = "SELECT * FROM barang LIMIT $halaman_awal, $batas;";
+
+unit
+
+$data = $conn->query("SELECT * FROM satuan;");
+
+$jumlah_data = $data->num_rows;
+$total_halaman = ceil($jumlah_data / $batas);
+
+
+$sql = "SELECT * FROM satuan LIMIT $halaman_awal, $batas;";
+
+
+Warehouse
+
+$data = $conn->query("SELECT g.*,k.jenis, s.satuan, b.merek
+                                        FROM gudang AS g 
+                                        LEFT JOIN barang as b ON g.id_barang=b.id
+                                        LEFT JOIN kategori as k ON g.id_jenis=k.id
+                                        LEFT  JOIN satuan as s ON g.quantity=s.id WHERE g.id LIKE '%$keyword%' OR g.item_name LIKE '%$keyword%' OR g.quantity LIKE '%$keyword%' OR g.price LIKE '%$keyword%' OR k.jenis LIKE '%$keyword%'");
+
+                                        $jumlah_data = $data->num_rows;
+                                        $total_halaman = ceil($jumlah_data / $batas);
+
+
+                                        $sql = "SELECT g.*,k.jenis, s.satuan, b.merek
+                                        FROM gudang AS g 
+                                       LEFT JOIN barang as b ON g.id_barang=b.id
+                                       LEFT JOIN kategori as k ON g.id_jenis=k.id
+                                       LEFT  JOIN satuan as s ON g.quantity=s.id WHERE g.id LIKE '%$keyword%' OR g.item_name LIKE '%$keyword%' OR g.quantity LIKE '%$keyword%' OR g.price LIKE '%$keyword%' OR k.jenis LIKE '%$keyword%'
+                                        LIMIT $halaman_awal, $batas;
+                                        ";
+

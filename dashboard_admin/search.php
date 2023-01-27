@@ -29,245 +29,814 @@ if (!isset($_SESSION['username'])) {
         <!-- Content Start -->
         <div class="content">
 
-            <?php include_once('layout/navbar.php') ?>
+            <!-- Navbar Start -->
+            <nav
+                class="navbar navbar-expand bg-primary navbar-light sticky-top px-4 shadow-lg pt-0 mb-4 bg-body-tertiary rounded">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-light mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0 ">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <?php
+                if (isset($_GET['id'])) {
+                    $id = $_GET['id'];
+                } else {
+                    $id = "";
+                }
+
+                ?>
+                <form class="d-none d-md-flex ms-4" role="search"
+                    action="http://localhost/toko/dashboard_admin/search.php" method="get" id="form">
+                    <input class="form-control border-0" type="hidden" value="<?= $id ?>" name="id">
+                    <input class="form-control border-0" type="search" placeholder="Search" name="query">
+                    <button class="btn btn-outline-light mx-1" type="submit">Search</button>
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">
+                            <i class="fa fa-envelope me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex text-light">Message</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all message</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">
+                            <i class="fa fa-bell me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex  text-light">Notificatin</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Profile updated</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">New user added</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Password changed</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all notifications</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="layout/img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex  text-light">John Doe</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="../auth/logout.php" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
             <div class="row">
-                <div class="col m-4 shadow-lg p-3 m-3 bg-body-tertiary rounded shadow-lg p-3 m-3 bg-body-tertiary rounded">
-                    
+                <div
+                    class="col m-4 shadow-lg p-3 m-3 bg-body-tertiary rounded shadow-lg p-3 m-3 bg-body-tertiary rounded">
+
                     <?php
-                    if(isset($_GET['id'])){
-                    if ($_GET['id'] == 2) {
-                        if (isset($_GET['query'])) {
-                            
-                            $keyword = $_GET['query']; ?>
+                    if (!isset($_GET['query'])) {
+                        $_GET['query'] = "";
+                    }
+                    if (isset($_GET['id'])) {
+                        // Warehouse search Start 
+                        if ($_GET['id'] == 2) {
+                            if ($_GET['query'] != "") {
 
-                            <div class="rounded p-3">
-                                <h3 class="mb-4 mt-2 ">Warehouse Stock</h3>
-                                <table class="table table-bordered text-center" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"> No</th>
-                                            <th scope="col"> Item Code</th>
-                                            <th scope="col"> Item Name</th>
-                                            <th scope="col"> Item Brand</th>
-                                            <th scope="col"> Item Category</th>
-                                            <th scope="col"> Unit of Measure</th>
-                                            <th scope="col"> Unit Price</th>
-                                            <th scope="col"> Qty</th>
-                                            <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
-                                                    New </button> </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $batas = 5;
-                                        $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
-                                        $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+                                $keyword = $_GET['query']; ?>
 
-                                        $previous = $halaman - 1;
-                                        $next = $halaman + 1;
+                                <div class="rounded p-3">
+                                    <h3 class="mb-4 mt-2 ">Warehouse Stock</h3>
+                                    <table class="table table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> No</th>
+                                                <th scope="col"> Item Code</th>
+                                                <th scope="col"> Item Name</th>
+                                                <th scope="col"> Item Brand</th>
+                                                <th scope="col"> Item Category</th>
+                                                <th scope="col"> Unit of Measure</th>
+                                                <th scope="col"> Unit Price</th>
+                                                <th scope="col"> Qty</th>
+                                                <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                                                        New </button> </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $batas = 5;
+                                            $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
-                                        include "../koneksi.php";
+                                            $previous = $halaman - 1;
+                                            $next = $halaman + 1;
 
-                                        $data = $conn->query("SELECT g.*,k.jenis, s.satuan, b.merek
+                                            include "../koneksi.php";
+
+                                            $data = $conn->query("SELECT g.*,k.jenis, s.satuan, b.merek
                                         FROM gudang AS g 
                                         LEFT JOIN barang as b ON g.id_barang=b.id
                                         LEFT JOIN kategori as k ON g.id_jenis=k.id
-                                        LEFT  JOIN satuan as s ON g.quantity=s.id WHERE g.id LIKE '%$keyword%' OR g.item_name LIKE '%$keyword%' OR g.quantity LIKE '%$keyword%' OR g.price LIKE '%$keyword%' OR k.jenis LIKE '%$keyword%'");
+                                        LEFT  JOIN satuan as s ON g.quantity=s.id WHERE g.id LIKE '%$keyword%' OR g.item_name LIKE '%$keyword%' OR g.quantity LIKE '%$keyword%' OR g.price LIKE '%$keyword%' OR k.jenis LIKE '%$keyword%' OR b.merek LIKE '%$keyword%' OR s.satuan LIKE '%$keyword%'");
 
-                                        $jumlah_data = $data->num_rows;
-                                        $total_halaman = ceil($jumlah_data / $batas);
+                                            $jumlah_data = $data->num_rows;
+                                            $total_halaman = ceil($jumlah_data / $batas);
 
 
-                                        $sql = "SELECT g.*,k.jenis, s.satuan, b.merek
+                                            $sql = "SELECT g.*,k.jenis, s.satuan, b.merek
                                         FROM gudang AS g 
                                        LEFT JOIN barang as b ON g.id_barang=b.id
                                        LEFT JOIN kategori as k ON g.id_jenis=k.id
-                                       LEFT  JOIN satuan as s ON g.quantity=s.id WHERE g.id LIKE '%$keyword%' OR g.item_name LIKE '%$keyword%' OR g.quantity LIKE '%$keyword%' OR g.price LIKE '%$keyword%' OR k.jenis LIKE '%$keyword%'
+                                       LEFT  JOIN satuan as s ON g.quantity=s.id WHERE g.id LIKE '%$keyword%' OR g.item_name LIKE '%$keyword%' OR g.quantity LIKE '%$keyword%' OR g.price LIKE '%$keyword%' OR k.jenis LIKE '%$keyword%'OR b.merek LIKE '%$keyword%' OR s.satuan LIKE '%$keyword%'
                                         LIMIT $halaman_awal, $batas;
                                         ";
-                                        $result = $conn->query($sql);
+                                            $result = $conn->query($sql);
 
-                                        if ($result->num_rows > 0) {
-                                            // output data of each row
-                                            $no = 1;
-                                            while ($row = $result->fetch_assoc()) {
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                $no = 1;
+                                                while ($row = $result->fetch_assoc()) {
 
-                                                ?>
+                                                    ?>
 
-                                                <tr>
-                                                    <th scope="row">
-                                                        <?= $no++ ?>
-                                                    </th>
-                                                    <td>
-                                                        <?= $row["id"] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $row["item_name"] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $row["merek"] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $row["jenis"] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $row["satuan"] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $row["price"] ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $row["quantity"] ?>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-success" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
-                                                            Edit</button>
-                                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
-                                                            data-bs-id="<?= $row["id"] ?>">
-                                                            Delete</button>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?= $no++ ?>
+                                                        </th>
+                                                        <td>
+                                                            <?= $row["id"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["item_name"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["merek"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["jenis"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["satuan"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["price"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["quantity"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                                Edit</button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                                data-bs-id="<?= $row["id"] ?>">
+                                                                Delete</button>
 
-                                                    </td>
-                                                </tr>
-                                                <?php
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+
+                                                }
+
 
                                             }
 
+                                            ?>
 
-                                        }
-
-                                        ?>
-
-                                    </tbody>
+                                        </tbody>
 
 
-                                </table>
-                                <?php include_once('layout/pagination.php') ?>
-                            </div>
+                                    </table>
+                                    <?php include_once('layout/pagination.php') ?>
+                                </div>
 
 
 
 
-                            <?php
-                        }else{ ?>
+                                <?php
+                            } else { ?>
                                 <div class="rounded p-3">
-        <h3 class="mb-4 mt-2 ">Warehouse Stock</h3>
-        <table class="table table-bordered text-center" style="width:100%">
-            <thead>
-                <tr>
-                    <th scope="col"> No</th>
-                    <th scope="col"> Item Code</th>
-                    <th scope="col"> Item Name</th>
-                    <th scope="col"> Item Brand</th>
-                    <th scope="col"> Item Category</th>
-                    <th scope="col"> Unit of Measure</th>
-                    <th scope="col"> Unit Price</th>
-                    <th scope="col"> Qty</th>
-                    <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
-                            New </button> </th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $batas = 5;
-                $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
-                $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+                                    <h3 class="mb-4 mt-2 ">Warehouse Stock</h3>
+                                    <table class="table table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> No</th>
+                                                <th scope="col"> Item Code</th>
+                                                <th scope="col"> Item Name</th>
+                                                <th scope="col"> Item Brand</th>
+                                                <th scope="col"> Item Category</th>
+                                                <th scope="col"> Unit of Measure</th>
+                                                <th scope="col"> Unit Price</th>
+                                                <th scope="col"> Qty</th>
+                                                <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                                                        New </button> </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $batas = 5;
+                                            $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
-                $previous = $halaman - 1;
-                $next = $halaman + 1;
+                                            $previous = $halaman - 1;
+                                            $next = $halaman + 1;
 
-                include "../koneksi.php";
+                                            include "../koneksi.php";
 
-                $data = $conn->query("SELECT g.*,k.jenis, s.satuan, b.merek
+                                            $data = $conn->query("SELECT g.*,k.jenis, s.satuan, b.merek
                FROM gudang AS g 
               LEFT JOIN barang as b ON g.id_barang=b.id
               LEFT JOIN kategori as k ON g.id_jenis=k.id
               LEFT  JOIN satuan as s ON g.quantity=s.id");
 
-                $jumlah_data = $data->num_rows;
-                $total_halaman = ceil($jumlah_data / $batas);
+                                            $jumlah_data = $data->num_rows;
+                                            $total_halaman = ceil($jumlah_data / $batas);
 
 
-                $sql = "SELECT g.*,k.jenis, s.satuan, b.merek
+                                            $sql = "SELECT g.*,k.jenis, s.satuan, b.merek
             FROM gudang AS g 
            LEFT JOIN barang as b ON g.id_barang=b.id
            LEFT JOIN kategori as k ON g.id_jenis=k.id
            LEFT  JOIN satuan as s ON g.quantity=s.id
            LIMIT $halaman_awal, $batas;
            ";
-                $result = $conn->query($sql);
+                                            $result = $conn->query($sql);
 
-                if ($result->num_rows > 0) {
-                    // output data of each row
-                    $no = 1;
-                    while ($row = $result->fetch_assoc()) {
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                $no = 1;
+                                                while ($row = $result->fetch_assoc()) {
 
-                        ?>
+                                                    ?>
 
-                        <tr>
-                            <th scope="row">
-                                <?= $no++ ?>
-                            </th>
-                            <td>
-                                <?= $row["id"] ?>
-                            </td>
-                            <td class="edited">
-                                <?= $row["item_name"] ?>
-                            </td>
-                            <td>
-                                <?= $row["merek"] ?>
-                            </td>
-                            <td>
-                                <?= $row["jenis"] ?>
-                            </td>
-                            <td>
-                                <?= $row["satuan"] ?>
-                            </td>
-                            <td class="edited">
-                                <?= $row["price"] ?>
-                            </td>
-                            <td class="edited">
-                                <?= $row["quantity"] ?>
-                            </td>
-                            <td>
-                                <button class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
-                                    Edit</button>
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
-                                    data-bs-id="<?= $row["id"] ?>">
-                                    Delete</button>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?= $no++ ?>
+                                                        </th>
+                                                        <td>
+                                                            <?= $row["id"] ?>
+                                                        </td>
+                                                        <td class="edited">
+                                                            <?= $row["item_name"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["merek"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["jenis"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["satuan"] ?>
+                                                        </td>
+                                                        <td class="edited">
+                                                            <?= $row["price"] ?>
+                                                        </td>
+                                                        <td class="edited">
+                                                            <?= $row["quantity"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                                Edit</button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                                data-bs-id="<?= $row["id"] ?>">
+                                                                Delete</button>
 
-                            </td>
-                        </tr>
-                        <?php
+                                                        </td>
+                                                    </tr>
+                                                    <?php
 
-                    }
-
-
-                }
-
-                ?>
-
-            </tbody>
+                                                }
 
 
-        </table>
-        <?php include_once('layout/pagination.php') ?>
-    </div>
-    
-    
+                                            }
 
-                            <?php
+                                            ?>
+
+                                        </tbody>
+
+
+                                    </table>
+                                    <?php include_once('layout/pagination.php') ?>
+                                </div>
+
+
+
+                                <?php
+                            }
+                            // Category End
+                            // Stuff Start
+                        } elseif ($_GET['id'] == 3) {
+                            if ($_GET['query'] != "") {
+                                ?>
+                                <div class="rounded p-3">
+                                    <h3 class="mb-4 mt-2">Stuff</h3>
+                                    <table class="table table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> No</th>
+                                                <th scope="col">Brand ID</th>
+                                                <th scope="col">Brand Name</th>
+                                                <th scope="col"> Brand Logo</th>
+                                                <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                                                        New </button> </th>
+                                                <!-- w -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $keyword = $_GET['query'];
+                                            $batas = 5;
+                                            $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                                            $previous = $halaman - 1;
+                                            $next = $halaman + 1;
+
+                                            include "../koneksi.php";
+
+                                            $data = $conn->query("SELECT * FROM barang WHERE id LIKE '%$keyword%' OR merek LIKE '%$keyword%';");
+
+                                            $jumlah_data = $data->num_rows;
+                                            $total_halaman = ceil($jumlah_data / $batas);
+
+                                            $sql = "SELECT * FROM barang WHERE id LIKE '%$keyword%' OR merek LIKE '%$keyword%' LIMIT $halaman_awal, $batas;";
+
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                $no = 1;
+                                                while ($row = $result->fetch_assoc()) {
+
+                                                    ?>
+
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?= $no++ ?>
+                                                        </th>
+                                                        <td>
+                                                            <?= $row["id"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["merek"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <img src="assets\<?= $row["brand_image"] ?>" style="max-width:50px ;"></img>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                                Edit</button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                                data-bs-id="<?= $row["id"] ?>">
+                                                                Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+
+                                                }
+                                            }
+
+                                            ?>
+
+                                        </tbody>
+
+
+                                    </table>
+                                    <?php include_once('layout/pagination.php') ?>
+                                </div>
+                                <?php
+
+                            } else {
+                                ?>
+                                <div class="rounded p-3">
+                                    <h3 class="mb-4 mt-2">Stuff</h3>
+                                    <table class="table table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> No</th>
+                                                <th scope="col">Brand ID</th>
+                                                <th scope="col">Brand Name</th>
+                                                <th scope="col"> Brand Logo</th>
+                                                <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                                                        New </button> </th>
+                                                <!-- w -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $batas = 5;
+                                            $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                                            $previous = $halaman - 1;
+                                            $next = $halaman + 1;
+
+                                            include "../koneksi.php";
+
+                                            $data = $conn->query("SELECT * FROM barang;");
+
+                                            $jumlah_data = $data->num_rows;
+                                            $total_halaman = ceil($jumlah_data / $batas);
+
+                                            $sql = "SELECT * FROM barang LIMIT $halaman_awal, $batas;";
+
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                $no = 1;
+                                                while ($row = $result->fetch_assoc()) {
+
+                                                    ?>
+
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?= $no++ ?>
+                                                        </th>
+                                                        <td>
+                                                            <?= $row["id"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["merek"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <img src="assets\<?= $row["brand_image"] ?>" style="max-width:50px ;"></img>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                                Edit</button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                                data-bs-id="<?= $row["id"] ?>">
+                                                                Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+
+                                                }
+                                            }
+
+                                            ?>
+
+                                        </tbody>
+
+
+                                    </table>
+                                    <?php include_once('layout/pagination.php') ?>
+                                </div>
+                                <?php
+                            }
+
+
+                            //Stuff End
+                            //Category Start
+                        } elseif ($_GET['id'] == 4) {
+                            if ($_GET['query'] != "") {
+                                ?>
+                                <div class="rounded p-3">
+                                    <h3 class="mb-4 mt-2">Category</h3>
+                                    <table class="table table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> No</th>
+                                                <th scope="col">Category ID</th>
+                                                <th scope="col">Category</th>
+                                                <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                                                        New </button> </th>
+                                            </tr>
+                                            <!-- w -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $keyword = $_GET['query'];
+                                            $batas = 5;
+                                            $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                                            $previous = $halaman - 1;
+                                            $next = $halaman + 1;
+
+                                            include "../koneksi.php";
+
+                                            $data = $conn->query("SELECT * FROM kategori WHERE id LIKE '%$keyword$' OR jenis LIKE '%$keyword$';");
+
+                                            $jumlah_data = $data->num_rows;
+                                            $total_halaman = ceil($jumlah_data / $batas);
+
+                                            $sql = "SELECT * FROM kategori WHERE id LIKE '%$keyword$' OR jenis LIKE '%$keyword$' LIMIT $halaman_awal, $batas;";
+
+
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                $no = 1;
+                                                while ($row = $result->fetch_assoc()) {
+
+                                                    ?>
+
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?= $no++ ?>
+                                                        </th>
+                                                        <td>
+                                                            <?= $row["id"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["jenis"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                                Edit</button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                                data-bs-id="<?= $row["id"] ?>">
+                                                                Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+
+                                                }
+                                            }
+
+                                            ?>
+
+                                        </tbody>
+
+
+                                    </table>
+                                    <?php include_once('layout/pagination.php') ?>
+                                </div>
+                                <?php
+                            } else {
+                                ?>
+                                <div class="rounded p-3">
+                                    <h3 class="mb-4 mt-2">Category</h3>
+                                    <table class="table table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> No</th>
+                                                <th scope="col">Category ID</th>
+                                                <th scope="col">Category</th>
+                                                <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                                                        New </button> </th>
+                                            </tr>
+                                            <!-- w -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $batas = 5;
+                                            $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                                            $previous = $halaman - 1;
+                                            $next = $halaman + 1;
+
+                                            include "../koneksi.php";
+
+                                            $data = $conn->query("SELECT * FROM kategori;");
+
+                                            $jumlah_data = $data->num_rows;
+                                            $total_halaman = ceil($jumlah_data / $batas);
+
+                                            $sql = "SELECT * FROM kategori LIMIT $halaman_awal, $batas;";
+
+
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                // output data of each row
+                                                $no = 1;
+                                                while ($row = $result->fetch_assoc()) {
+
+                                                    ?>
+
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?= $no++ ?>
+                                                        </th>
+                                                        <td>
+                                                            <?= $row["id"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $row["jenis"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                                Edit</button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                                data-bs-id="<?= $row["id"] ?>">
+                                                                Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+
+                                                }
+                                            }
+
+                                            ?>
+
+                                        </tbody>
+
+
+                                    </table>
+                                    <?php include_once('layout/pagination.php') ?>
+                                </div>
+                                <?php
+                            }
+                            //Category end
+                            // Unit of Measure Start
+                        } elseif ($_GET['id'] == 5) {
+                            if ($_GET['query'] != "") {
+                                ?>
+                                <div class="rounded p-3">
+                                    <h3 class="mb-4 mt-2">Unit of Measure</h3>
+                                    <table class="table table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> No</th>
+                                                <th scope="col">Unit of Measure</th>
+                                                <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                                                        New </button> </th>
+                                            </tr>
+                                            <!-- w -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $keyword = $_GET['query'];
+                                            $batas = 5;
+                                            $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                                            $previous = $halaman - 1;
+                                            $next = $halaman + 1;
+
+                                            include "../koneksi.php";
+
+                                            $data = $conn->query("SELECT * FROM satuan WHERE id LIKE '%$keyword%' OR satuan LIKE '%$keyword%';");
+
+                                            $jumlah_data = $data->num_rows;
+                                            $total_halaman = ceil($jumlah_data / $batas);
+
+
+                                            $sql = "SELECT * FROM satuan WHERE id LIKE '%$keyword%' OR satuan LIKE '%$keyword%' LIMIT $halaman_awal, $batas;";
+
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                $no = 1;
+                                                while ($row = $result->fetch_assoc()) {
+                                                    ?>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?= $no++ ?>
+                                                        </th>
+                                                        <td>
+                                                            <?= $row["satuan"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                                Edit</button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                                data-bs-id="<?= $row["id"] ?>">
+                                                                Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <?php include_once('layout/pagination.php') ?>
+                                </div>
+                                <?php
+                            } else {
+                                ?>
+                                <div class="rounded p-3">
+                                    <h3 class="mb-4 mt-2">Unit of Measure</h3>
+                                    <table class="table table-bordered text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> No</th>
+                                                <th scope="col">Unit of Measure</th>
+                                                <th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new">
+                                                        New </button> </th>
+                                            </tr>
+                                            <!-- w -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $batas = 5;
+                                            $halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+                                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                                            $previous = $halaman - 1;
+                                            $next = $halaman + 1;
+
+                                            include "../koneksi.php";
+
+                                            $data = $conn->query("SELECT * FROM satuan;");
+
+                                            $jumlah_data = $data->num_rows;
+                                            $total_halaman = ceil($jumlah_data / $batas);
+
+
+                                            $sql = "SELECT * FROM satuan LIMIT $halaman_awal, $batas;";
+
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                $no = 1;
+                                                while ($row = $result->fetch_assoc()) {
+                                                    ?>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?= $no++ ?>
+                                                        </th>
+                                                        <td>
+                                                            <?= $row["satuan"] ?>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal" data-bs-id="<?= $row["id"] ?>">
+                                                                Edit</button>
+                                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete"
+                                                                data-bs-id="<?= $row["id"] ?>">
+                                                                Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <?php include_once('layout/pagination.php') ?>
+                                </div>
+                                <?php
+                            }
+                        } else {
+                            echo "HELLO THERE";
                         }
 
-
-                    }else{
-                        echo "Hello";
-                    }
+                        // warehouse search end 
                     
-                }else{
-                    echo "ERROR";
-                }
+                    } else {
+                        echo "HELLO THERE";
+                    }
 
 
                     ?>
