@@ -1,1 +1,0 @@
-INSERT INTO `gudang` (`id`, `id_barang`, `item_name`, `image`, `id_satuan`, `quantity`, `price`, `id_jenis`) VALUES (NULL, '1', 'aku', 'photo', '1', '1', '1', '1');
