@@ -19,7 +19,7 @@
   <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center bg-secondary" style="min-height: 100vh;">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-                    <div class="bg-white rounded p-4 p-sm-5 my-4 mx-3">
+                    <div class="bg-white rounded p-4 p-sm-5 my-4 mx-3 shadow-lg">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <a href="#" class="text-decoration-none">
                                 <h3 class="text-danger "><i class="fa fa-user-edit me-2"></i>Admin</h3>
